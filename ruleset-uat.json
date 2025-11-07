@@ -1,0 +1,33 @@
+{
+  "name": "UAT Branch Protection",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "include": ["refs/head/uat"],
+      "exclude": []
+    }
+  },
+  "rules": [
+    {
+      "type": "pull_request",
+      "parameters": {
+        "dismiss_stale_reviews_on_push": true,
+        "require_code_owner_review": true,
+        "required_approving_review_count": 2
+      }
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": true,
+        "required_status_checks": ["build", "test", "deploy-uat"]
+      }
+    },
+    { "type": "linear_history" },
+    { "type": "non_fast_forward" },
+    { "type": "deletion" }
+  ],
+  "bypass_actors": [],
+  "applies_to": { "repository_ids": [] }
+}

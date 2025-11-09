@@ -29,9 +29,9 @@
         "required_approving_review_count": 2
       }
     },
-    { "type": "non_fast_forward", "parameters": { "block": true } },
-    { "type": "required_linear_history", "parameters": { "enforcement": true } },
-    { "type": "restrict_force_pushes", "parameters": { "block": true } },
-    { "type": "restrict_deletions", "parameters": { "block": true } }
+    { "type": "non_fast_forward" },
+    { "type": "required_linear_history" },
+    { "type": "restrict_force_pushes" },
+    { "type": "restrict_deletions" }
   ]
 }

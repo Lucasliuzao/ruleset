@@ -2,6 +2,7 @@
   "name": "Release Branch Protection",
   "target": "branch",
   "enforcement": "active",
+  "bypass_actors": [],
   "conditions": {
     "ref_name": {
       "include": ["refs/heads/release"],
@@ -10,6 +11,16 @@
   },
   "rules": [
     {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": true,
+        "required_status_checks": [
+          { "context": "build" },
+          { "context": "deploy-release" }
+        ]
+      }
+    },
+    {
       "type": "pull_request",
       "parameters": {
         "dismiss_stale_reviews_on_push": true,
@@ -17,29 +28,10 @@
         "required_approving_review_count": 3
       }
     },
-    {
-      "type": "required_status_checks",
-      "parameters": {
-        "strict_required_status_checks_policy": true,
-        "required_status_checks": ["build", "test", "deploy-prod"]
-      }
-    },
-    { "type": "linear_history" },
     { "type": "non_fast_forward" },
-    { "type": "deletion" },
-    {
-      "type": "signed_commits",
-      "parameters": { "require_signed_commits": true }
-    },
-    {
-      "type": "restrict_pushes",
-      "parameters": {
-        "restricted_actors": [
-          { "actor_type": "Team", "actor_id": 1234567 }
-        ]
-      }
-    }
-  ],
-  "bypass_actors": [],
-  "applies_to": { "repository_ids": [] }
+    { "type": "required_linear_history" },
+    { "type": "restrict_force_pushes" },
+    { "type": "restrict_deletions" },
+    { "type": "signed_commits" }
+  ]
 }
